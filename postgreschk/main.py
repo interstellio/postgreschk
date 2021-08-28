@@ -5,19 +5,33 @@
 import os
 import sys
 import argparse
+import configparser
 
+import psycopg2
 from aiohttp import web
-
 
 from postgreschk import metadata
 
 
 def postgreschk(args):
     try:
+        config = configparser.ConfigParser()
+        config.read('/etc/nebularstack/postgreschk.ini')
+        host = config['postgres']['host']
+        username = config['postgres']['username']
+        password = config['postgres']['password']
+
         if os.path.isfile('//var/lib/postgresql/12/main/standby.signal'):
             return (False, 'backup')
         else:
             return (True, 'primary')
+
+        conn = psycopg2.connect(
+            host=host,
+            user=username,
+            password=password)
+        conn.close()
+
     except Exception as err:
         return (False, err,)
 
