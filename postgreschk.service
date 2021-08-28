@@ -1,10 +1,10 @@
 [Unit]
-Description=MYSQLCHK HTTP daemon
+Description=POSTGRESCHK HTTP daemon
 After=network.target
 
 [Service]
-User=nebularstack
-Group=nebularstack
+User=postgres
+Group=postgres
 WorkingDirectory=/tmp
 ExecStart=postgreschk -s
 LimitAS=infinity
