@@ -21,16 +21,17 @@ def postgreschk(args):
         username = config['postgres']['username']
         password = config['postgres']['password']
 
-        if os.path.isfile('//var/lib/postgresql/12/main/standby.signal'):
-            return (False, 'backup')
-        else:
-            return (True, 'primary')
-
         conn = psycopg2.connect(
             host=host,
             user=username,
             password=password)
         conn.close()
+
+        if os.path.isfile('//var/lib/postgresql/12/main/standby.signal'):
+            return (False, 'backup')
+        else:
+            return (True, 'primary')
+
 
     except Exception as err:
         return (False, err,)
