@@ -27,7 +27,7 @@ def postgreschk(args):
             password=password)
         conn.close()
 
-        if os.path.isfile('//var/lib/postgresql/12/main/standby.signal'):
+        if os.path.isfile('//var/lib/postgresql/13/main/standby.signal'):
             return (False, 'backup')
         else:
             return (True, 'primary')
